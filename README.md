@@ -47,7 +47,7 @@ Mở trình duyệt theo URL hiển thị trong terminal (mặc định `http://
 
 Dự án được triển khai tự động lên GitHub Pages thông qua GitHub Actions khi push lên nhánh `main`.
 
-Trang sẽ có địa chỉ mặc định: **https://phatnd249.github.io/media-ai-landingpage/**
+Trang sẽ có địa chỉ mặc định: **https://share4happy.github.io/media-ai-landingpage/**
 
 Vì dùng URL mặc định (không custom domain), `vite.config.js` đã được cấu hình:
 
@@ -76,7 +76,7 @@ Nếu muốn dùng domain riêng:
    domain.com
    ```
 3. Thêm file rỗng `public/.nojekyll` để tránh GitHub Pages xử lý qua Jekyll.
-4. Khai báo domain tại **Settings → Pages → Custom domain** và cấu hình bản ghi DNS (CNAME) trỏ về `phatnd249.github.io`.
+4. Khai báo domain tại **Settings → Pages → Custom domain** và cấu hình bản ghi DNS (CNAME) trỏ về `share4happy.github.io`.
 
 > Ghi chú: Các thư mục `node_modules` và `dist` đã được liệt kê trong `.gitignore`; GitHub Actions sẽ tự cài dependencies và build lại trên môi trường của nó.
 
