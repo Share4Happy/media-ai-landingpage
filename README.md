@@ -43,44 +43,42 @@ npm run lint
 
 Mở trình duyệt theo URL hiển thị trong terminal (mặc định `http://localhost:5173`).
 
-## Deploy lên Vercel
+## Deploy lên GitHub Pages
 
-### Cách 1: Deploy qua Dashboard (không cần cài đặt)
+Dự án được triển khai tự động lên GitHub Pages thông qua GitHub Actions khi push lên nhánh `main`.
 
-1. Đẩy source code lên GitHub / GitLab.
-2. Truy cập [vercel.com](https://vercel.com) và đăng nhập.
-3. Chọn **Add New → Project**, import repository chứa dự án.
-4. Vercel tự động nhận diện framework **Vite** với cấu hình mặc định:
-   - **Build command:** `npm run build`
-   - **Output directory:** `dist`
-5. Nhấn **Deploy** và chờ quá trình hoàn tất.
+Trang sẽ có địa chỉ mặc định: **https://phatnd249.github.io/media-ai-landingpage/**
 
-### Cách 2: Deploy qua Vercel CLI
+Vì dùng URL mặc định (không custom domain), `vite.config.js` đã được cấu hình:
 
-```bash
-# Cài đặt Vercel CLI
-npm install -g vercel
-
-# Deploy lên môi trường preview
-vercel
-
-# Deploy lên production (sau khi preview OK)
-vercel --prod
+```js
+export default defineConfig({
+  base: '/media-ai-landingpage/',
+  plugins: [react()],
+})
 ```
 
-### Cấu hình tùy chỉnh (tùy chọn)
+### Bật GitHub Pages lần đầu
 
-Tạo file `vercel.json` tại thư mục gốc nếu cần cấu hình thêm:
+1. Vào repository trên GitHub → **Settings**.
+2. Chọn mục **Pages** ở thanh bên trái.
+3. Tại **Build and deployment → Source**, chọn **GitHub Actions**.
+4. Push lên nhánh `main` (hoặc vào tab **Actions** chọn workflow *Deploy to GitHub Pages* → **Run workflow**).
+5. Workflow sẽ build bằng `npm ci` + `npm run build` (Node 20) và deploy thư mục `dist`.
 
-```json
-{
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "framework": "vite"
-}
-```
+### Cấu hình custom domain (tùy chọn)
 
-> Ghi chú: Các thư mục `node_modules` và `dist` đã được liệt kê trong `.gitignore`, Vercel sẽ tự build lại trên môi trường của nó nên không ảnh hưởng đến quá trình deploy.
+Nếu muốn dùng domain riêng:
+
+1. Đổi `base` trong `vite.config.js` thành `'/'`.
+2. Tạo file `public/CNAME` với nội dung là domain, ví dụ:
+   ```
+   domain.com
+   ```
+3. Thêm file rỗng `public/.nojekyll` để tránh GitHub Pages xử lý qua Jekyll.
+4. Khai báo domain tại **Settings → Pages → Custom domain** và cấu hình bản ghi DNS (CNAME) trỏ về `phatnd249.github.io`.
+
+> Ghi chú: Các thư mục `node_modules` và `dist` đã được liệt kê trong `.gitignore`; GitHub Actions sẽ tự cài dependencies và build lại trên môi trường của nó.
 
 ## Cấu trúc thư mục
 
