@@ -47,16 +47,24 @@ Mở trình duyệt theo URL hiển thị trong terminal (mặc định `http://
 
 Dự án được triển khai tự động lên GitHub Pages thông qua GitHub Actions khi push lên nhánh `main`.
 
-Trang sẽ có địa chỉ mặc định: **https://share4happy.github.io/media-ai-landingpage/**
+Site được phục vụ tại custom domain: **https://mediaai.share4happy.com/**
 
-Vì dùng URL mặc định (không custom domain), `vite.config.js` đã được cấu hình:
+Vì dùng custom domain (site chạy ở gốc domain), `vite.config.js` đã được cấu hình `base: '/'`:
 
 ```js
 export default defineConfig({
-  base: '/media-ai-landingpage/',
+  base: '/',
   plugins: [react()],
 })
 ```
+
+Custom domain được giữ qua các lần deploy nhờ file `public/CNAME`:
+
+```
+mediaai.share4happy.com
+```
+
+Ngoài ra có file rỗng `public/.nojekyll` để tránh GitHub Pages xử lý qua Jekyll.
 
 ### Bật GitHub Pages lần đầu
 
@@ -66,17 +74,11 @@ export default defineConfig({
 4. Push lên nhánh `main` (hoặc vào tab **Actions** chọn workflow *Deploy to GitHub Pages* → **Run workflow**).
 5. Workflow sẽ build bằng `npm ci` + `npm run build` (Node 20) và deploy thư mục `dist`.
 
-### Cấu hình custom domain (tùy chọn)
+### Đổi custom domain
 
-Nếu muốn dùng domain riêng:
-
-1. Đổi `base` trong `vite.config.js` thành `'/'`.
-2. Tạo file `public/CNAME` với nội dung là domain, ví dụ:
-   ```
-   domain.com
-   ```
-3. Thêm file rỗng `public/.nojekyll` để tránh GitHub Pages xử lý qua Jekyll.
-4. Khai báo domain tại **Settings → Pages → Custom domain** và cấu hình bản ghi DNS (CNAME) trỏ về `share4happy.github.io`.
+1. Cập nhật nội dung file `public/CNAME` thành domain mới.
+2. Khai báo domain tại **Settings → Pages → Custom domain** và cấu hình bản ghi DNS (CNAME) trỏ về `share4happy.github.io`.
+3. Nếu chuyển sang URL mặc định `https://share4happy.github.io/media-ai-landingpage/`, đổi `base` trong `vite.config.js` thành `'/media-ai-landingpage/'` và xóa `public/CNAME`.
 
 > Ghi chú: Các thư mục `node_modules` và `dist` đã được liệt kê trong `.gitignore`; GitHub Actions sẽ tự cài dependencies và build lại trên môi trường của nó.
 
